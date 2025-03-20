@@ -1,0 +1,3 @@
+C:/Users/Apermesa/Documents/GitHub/Audio-Spatializer/cmake-build-debug/CMakeFiles/Audio_Spatializer.dir
+C:/Users/Apermesa/Documents/GitHub/Audio-Spatializer/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Apermesa/Documents/GitHub/Audio-Spatializer/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\src\test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\src\test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\steamaudio\include\phonon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\steamaudio\include\phonon_interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\steamaudio\include\phonon_version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Apermesa\Documents\GitHub\Audio-Spatializer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{FE59CD9E-9C17-32DA-B365-2D8EDC969BA8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{42B97755-3099-3756-B2F6-9CD9F068D141}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
