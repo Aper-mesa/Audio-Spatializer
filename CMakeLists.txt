@@ -21,7 +21,7 @@ add_executable(Audio_Spatializer
 link_directories(steamaudio/lib/windows-x64)
 
 target_link_libraries(Audio_Spatializer
-        C:/Users/Apermesa/Documents/GitHub/Audio-Spatializer/steamaudio/lib/windows-x64/phonon.lib)
+        "${CMAKE_SOURCE_DIR}/steamaudio/lib/windows-x64/phonon.lib")
 
 # 将 phonon.dll 复制到输出目录
 add_custom_command(TARGET Audio_Spatializer POST_BUILD
