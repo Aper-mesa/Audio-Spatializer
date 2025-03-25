@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 project(Audio_Spatializer)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 23)
 # 设置 Steam Audio 路径
 set(STEAMAUDIO_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/steamaudio/include")
 set(STEAMAUDIO_LIB_DIR "${CMAKE_SOURCE_DIR}/steamaudio/lib/windows-x64")
