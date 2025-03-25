@@ -3,7 +3,7 @@
 //
 
 #include "test.h"
-
+#pragma comment(lib, "phonon.lib")
 std::vector<float> load_input_audio(const std::string& filename) {
     std::ifstream file(filename.c_str(), std::ios::binary);
 

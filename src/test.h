@@ -12,4 +12,5 @@
 #include <iterator>
 #include <vector>
 
+#pragma comment(lib, "phonon.lib")
 #include <phonon.h>
