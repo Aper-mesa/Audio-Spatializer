@@ -10,12 +10,15 @@ include_directories(src)
 include_directories(steamaudio)
 include_directories(steamaudio/include)
 
+aux_source_directory(src/capture furry)
 add_executable(Audio_Spatializer
         src/test.cpp
         src/test.h
         steamaudio/include/phonon.h
         steamaudio/include/phonon_interfaces.h
-        steamaudio/include/phonon_version.h)
+        steamaudio/include/phonon_version.h
+        ${furry}
+)
 
 link_directories(steamaudio/lib/windows-x64)
 
