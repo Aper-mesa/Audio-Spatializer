@@ -32,3 +32,4 @@ add_custom_command(TARGET Audio_Spatializer POST_BUILD
         "$<TARGET_FILE_DIR:Audio_Spatializer>"
 )
 
+add_compile_options(--enable-clocale)

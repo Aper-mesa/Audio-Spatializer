@@ -6,6 +6,7 @@
 #define AUDIO_SPATIALIZER_DEVICES_H
 #include <string>
 #include <vector>
+#include <Windows.h>
 
 namespace furry {
     #define FURRY_ORIGINAL_OUTPUT 1
@@ -14,7 +15,7 @@ namespace furry {
     #define FURRY_NOT_USED_INPUT 4
     #define FURRY_NOT_USED_OUTPUT 5
     struct deviceInfo{
-        int deviceId;
+        LPWSTR deviceId;
         std::string deviceName;
         int deviceType;
     };
@@ -22,14 +23,14 @@ namespace furry {
     class devices {
         struct outputDevice{
            bool linked = false;
-           int deviceId;
+           LPWSTR deviceId;
            std::string deviceName;
            int deviceType;
         };
         struct inputDevice{
             bool linked = false;
             outputDevice *linkedDevice = nullptr;
-            int deviceId;
+            LPWSTR deviceId;
             std::string deviceName;
             int deviceType;
         };
@@ -39,13 +40,8 @@ namespace furry {
 
         public:
             bool init();
-            deviceInfo getDevices();
-            deviceInfo getInputDevices();
-            deviceInfo getOutputDevices();
-            deviceInfo getOriginalOutputDevices();
-            void setInputDevice(int deviceId);
-            void setOutputDevice(int deviceId);
-            void setOriginalOutputDevice(int deviceId);
+            std::vector<deviceInfo> getDevices();
+            deviceInfo getOriginalOutputDevice();
             void outputToConsole();
     };
 
