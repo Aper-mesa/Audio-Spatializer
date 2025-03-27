@@ -18,6 +18,8 @@ add_executable(Audio_Spatializer
         steamaudio/include/phonon_interfaces.h
         steamaudio/include/phonon_version.h
         ${furry}
+        src/capture/process.cpp
+        src/capture/process.h
 )
 
 link_directories(steamaudio/lib/windows-x64)

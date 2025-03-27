@@ -4,6 +4,7 @@
 
 #ifndef AUDIO_SPATIALIZER_DEVICES_H
 #define AUDIO_SPATIALIZER_DEVICES_H
+#include <mmdeviceapi.h>
 #include <string>
 #include <vector>
 #include <Windows.h>
@@ -18,6 +19,7 @@ namespace furry {
         LPWSTR deviceId;
         std::string deviceName;
         int deviceType;
+        IMMDevice* device;
     };
 
     class devices {
@@ -25,12 +27,14 @@ namespace furry {
            bool linked = false;
            LPWSTR deviceId;
            std::string deviceName;
+            IMMDevice* device;
            int deviceType;
         };
         struct inputDevice{
             bool linked = false;
             outputDevice *linkedDevice = nullptr;
             LPWSTR deviceId;
+            IMMDevice *device;
             std::string deviceName;
             int deviceType;
         };
@@ -42,6 +46,7 @@ namespace furry {
             bool init();
             std::vector<deviceInfo> getDevices();
             deviceInfo getOriginalOutputDevice();
+            IMMDevice *selectDeviceById(LPWSTR deviceId); //TODO: 暂时看起来不需要
             void outputToConsole();
     };
 

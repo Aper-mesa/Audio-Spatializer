@@ -62,7 +62,7 @@ namespace furry {
             std::string deviceName = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(prop.pwszVal);
             printf("OUTPUT Device %d: %s\n", i, deviceName.c_str());
             printf("DEVICE ID: %ls\n", deviceId);
-            outputDevice opTmp = {false, deviceId, deviceName, FURRY_NOT_USED_OUTPUT};
+            outputDevice opTmp = {false, deviceId, deviceName, device, FURRY_NOT_USED_OUTPUT};
             outputDevices.push_back(opTmp);
         }
         devices->Release();
@@ -83,7 +83,7 @@ namespace furry {
             printf("INPUT Device %d: %s\n", i, deviceName.c_str());
             printf("DEVICE ID: %ls\n", deviceId);
 
-            inputDevice ipTmp = {false, nullptr, deviceId, deviceName, FURRY_NOT_USED_INPUT};
+            inputDevice ipTmp = {false, nullptr, deviceId, device, deviceName, FURRY_NOT_USED_INPUT};
             inputDevices.push_back(ipTmp);
         }
         // 识别系统音频输出设备
@@ -102,11 +102,11 @@ namespace furry {
     std::vector<deviceInfo> devices::getDevices() {
         std::vector<deviceInfo> devices;
         for (auto & device : outputDevices) {
-            deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType};
+            deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType, device.device};
             devices.push_back(dv);
         }
         for (auto & device : inputDevices) {
-            deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType};
+            deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType, device.device};
             devices.push_back(dv);
         }
         return devices;
@@ -129,11 +129,7 @@ namespace furry {
         }
     }
 
-    //TODO: 剩余部分
-} // furry
 
-int main(){
-    furry::devices d;
-    d.init();
-    d.outputToConsole();
+
+    //TODO: 剩余部分
 }

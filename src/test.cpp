@@ -23,7 +23,7 @@ void save_output_audio(const std::string& filename, std::vector<float> outputaud
     file.write(reinterpret_cast<char *>(outputaudio.data()), outputaudio.size() * sizeof(float));
 }
 
-int main2(int argc, char **argv) {
+int main(int argc, char **argv) {
     auto inputAudio = load_input_audio(R"(C:\Users\Apermesa\Desktop\input.raw)");
 
     IPLContextSettings contextSettings{};
