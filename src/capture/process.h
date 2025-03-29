@@ -22,7 +22,6 @@ public:
     void stop();
     void setInputDevice(deviceInfo inputDevice);
     void setOutputDevice(deviceInfo outputDevice);
-private:
     class watcher {
         watcher(bool* loop, deviceInfo inputDevice, deviceInfo outputDevice);
     };

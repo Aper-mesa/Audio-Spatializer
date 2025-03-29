@@ -89,9 +89,10 @@ namespace furry {
         // 识别系统音频输出设备
         LPWSTR deviceId = nullptr;
         enumerator->GetDefaultAudioEndpoint(eRender, eConsole, &device);
-        for(auto & inputDevice : inputDevices) {
-            if (inputDevice.deviceId == deviceId) {
-                inputDevice.deviceType = FURRY_ORIGINAL_OUTPUT;
+        device->GetId(&deviceId);
+        for(auto & outputDevice : outputDevices) {
+            if (wcscmp(outputDevice.deviceId, deviceId) == 0) {
+                outputDevice.deviceType = FURRY_ORIGINAL_OUTPUT;
                 break;
             }
         }
@@ -104,9 +105,13 @@ namespace furry {
         for (auto & device : outputDevices) {
             deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType, device.device};
             devices.push_back(dv);
+            printf("Device Name: %s\n", device.deviceName.c_str());
+            printf("Device ID: %ls\n", device.deviceId);
         }
         for (auto & device : inputDevices) {
             deviceInfo dv = {device.deviceId, device.deviceName, device.deviceType, device.device};
+            printf("Device Name: %s\n", device.deviceName.c_str());
+            printf("Device ID: %ls\n", device.deviceId);
             devices.push_back(dv);
         }
         return devices;
@@ -115,7 +120,7 @@ namespace furry {
     deviceInfo devices::getOriginalOutputDevice() {
         for (auto & device : outputDevices) {
             if (device.deviceType == FURRY_ORIGINAL_OUTPUT) {
-                return deviceInfo {device.deviceId, device.deviceName, device.deviceType};
+                return deviceInfo {device.deviceId, device.deviceName, device.deviceType, device.device};
             }
         }
         return deviceInfo {nullptr, "", FURRY_NOT_USED_OUTPUT};
