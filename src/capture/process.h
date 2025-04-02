@@ -17,8 +17,9 @@ class Process {
     bool muteInput=false;
     std::thread fuck;
 public:
+    BYTE *(*processFunction) (BYTE *input);
     Process(deviceInfo inputDevice, deviceInfo outputDevice);
-    void start();
+    void start(BYTE *(*) (BYTE *input));
     void stop();
     void setInputDevice(deviceInfo inputDevice);
     void setOutputDevice(deviceInfo outputDevice);

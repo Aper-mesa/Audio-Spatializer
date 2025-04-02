@@ -30,7 +30,7 @@ namespace furry {
 
 }
 
-[[noreturn]] void run(deviceInfo in, deviceInfo out){
+[[noreturn]] void run(deviceInfo in, deviceInfo out, BYTE *(*processFunction) (BYTE *input)){
     const IID IID_IAudioClient = __uuidof(IAudioClient);
     const IID IID_IAudioCaptureClient = __uuidof(IAudioCaptureClient);
     IAudioClient *pAudioClientC = NULL;
@@ -44,8 +44,6 @@ namespace furry {
     UINT32 numFramesAvailable_in;
     UINT32 numFramesAvailable_out;
     UINT32 numFramesPadding;
-    BYTE *data_in;
-    BYTE *data_out;
     BYTE *tmp;
     DWORD flags;
 // 音频输出端配置
@@ -76,6 +74,7 @@ namespace furry {
 
     HRESULT hr;
     UINT32 lengthPacket;
+/**
     IAudioEndpointVolume *pVolume = NULL;
     out.device->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_ALL, NULL, (void**)&pVolume);
     BOOL mute;
@@ -88,53 +87,31 @@ namespace furry {
     pVolume->GetChannelVolumeLevel(0, &level);
     pVolume->SetChannelVolumeLevel(0, 100, NULL);
     pVolume->SetMasterVolumeLevel(100.0, NULL);
+**/
     while(true){
+        BYTE *data_in = nullptr;
         pCaptureClient->GetNextPacketSize(&lengthPacket);
         int offset = 0;
-        data_out = (BYTE*)malloc(480 * pwfx->nBlockAlign * 10000);
         while (lengthPacket != 0) {
             hr = pCaptureClient->GetBuffer(&data_in, &numFramesAvailable_in, &flags, NULL, NULL);
-            memcpy(data_out + offset * pwfx->nBlockAlign, data_in, numFramesAvailable_in * pwfx->nBlockAlign);
-            pCaptureClient->GetNextPacketSize(&lengthPacket);
-            offset+= numFramesAvailable_in/480;
+            pAudioClientR->GetCurrentPadding(&numFramesPadding);
+            UINT32 padding = bufferFrameCount_out - numFramesPadding;
+            UINT32 writeFrames = std::min(numFramesAvailable_in, padding);
+            BYTE *data_out = nullptr;
+            pRenderClient->GetBuffer(writeFrames, &data_out);
+            memcpy(data_out, data_in, writeFrames * pwfx->nBlockAlign);
+            pRenderClient->ReleaseBuffer(writeFrames, flags);
             pCaptureClient->ReleaseBuffer(numFramesAvailable_in);
+            pCaptureClient->GetNextPacketSize(&lengthPacket);
         }
-        hr = pRenderClient->GetBuffer(480 * offset, (BYTE**)&tmp);
-        switch(hr){
-            case S_OK:
-                std::cout << "S_OK" << std::endl;
-                break;
-            case AUDCLNT_E_BUFFER_ERROR:
-                std::cout << "AUDCLNT_E_BUFFER_ERROR" << std::endl;
-                break;
-            case AUDCLNT_E_BUFFER_TOO_LARGE:
-                std::cout << "AUDCLNT_E_BUFFER_TOO_LARGE" << std::endl;
-                break;
-            case AUDCLNT_E_BUFFER_SIZE_ERROR:
-                std::cout << "AUDCLNT_E_BUFFER_SIZE_ERROR" << std::endl;
-                break;
-            case AUDCLNT_E_DEVICE_INVALIDATED:
-                std::cout << "AUDCLNT_E_DEVICE_INVALIDATED" << std::endl;
-                break;
-            case AUDCLNT_E_SERVICE_NOT_RUNNING:
-                std::cout << "AUDCLNT_E_SERVICE_NOT_RUNNING" << std::endl;
-                break;
-            case AUDCLNT_E_OUT_OF_ORDER:
-                std::cout << "AUDCLNT_E_OUT_OF_ORDER" << std::endl;
-                break;
-            case AUDCLNT_E_BUFFER_OPERATION_PENDING:
-                std::cout << "AUDCLNT_E_BUFFER_OPERATION_PENDING" << std::endl;
-                break;
-
-        }
-        memcpy(tmp, data_out, offset * numFramesAvailable_in * pwfx->nBlockAlign);
-        hr = pRenderClient->ReleaseBuffer(480 * offset, flags);
-        Sleep((DWORD)rt/100000/2);
 
 
     }
 
     //
+}
+BYTE *processFunction(BYTE *input){
+    return input;
 }
 int main(){
     devices d = devices();
@@ -152,6 +129,6 @@ int main(){
             break;
         }
     }
-    run(ds, output);
+    run(ds, output, processFunction);
 
 }
